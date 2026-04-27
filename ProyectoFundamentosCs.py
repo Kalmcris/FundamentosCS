@@ -1,3 +1,6 @@
+#Trabajo Práctico 1 - Fundamentos de la Computación
+#Integrantes: Martin Salamanca, Joaquín González, Pablo Rojas, Cristian Osses
+
 def obtener_clausura_epsilon(estados, transiciones):
     """
     Calcula todos los estados a los que se puede llegar consumiendo
