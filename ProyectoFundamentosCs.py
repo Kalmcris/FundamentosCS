@@ -21,7 +21,6 @@ def obtener_clausura_epsilon(estados, transiciones):
 
 
 def procesar_automata(lineas):
-    # Desempaquetar las 6 líneas
     l_estados, l_alfabeto, l_inicial, l_finales, l_transiciones, l_palabra = lineas
     caracteres_prohibidos = ["#", "'", '"', ","]
 
@@ -69,7 +68,6 @@ def procesar_automata(lineas):
 
         origen, simbolo, destino = contenido
 
-        # Validar que estados y símbolos existan
         if origen not in estados or destino not in estados:
             print("Error encontrado en 5")
             return
@@ -87,24 +85,20 @@ def procesar_automata(lineas):
     # Línea 6: Palabra a procesar
     palabra = l_palabra.strip()
     if palabra == "#":
-        palabra = ""  # El símbolo '#' en la palabra significa vacío
+        palabra = ""  
     else:
         for char in palabra:
             if char not in alfabeto and char != "#":
                 print("Error encontrado en 6")
                 return
 
-    # Se parte desde la clausura épsilon del estado inicial
     estados_actuales = obtener_clausura_epsilon({estado_inicial}, transiciones)
 
     for i in range(len(palabra) + 1):
-        #Imprimir estado visual de la computación
         mitad_izq = palabra[:i]
         mitad_der = palabra[i:]
-        # Juntamos los estados actuales ordenados alfabéticamente (ej: "AB")
         estados_str = "".join(sorted(list(estados_actuales)))
 
-        # Imprime ej: "00_011 BC"
         print(f"{mitad_izq}_{mitad_der} {estados_str}".strip())
 
         # Si llega al final de la palabra, rompe el ciclo
@@ -114,13 +108,11 @@ def procesar_automata(lineas):
         char = palabra[i]
         siguientes_estados = set()
 
-        # Computar el siguiente paso para todos los estados simultáneamente
         for estado in estados_actuales:
             if estado in transiciones and char in transiciones[estado]:
                 for dest in transiciones[estado][char]:
                     siguientes_estados.add(dest)
 
-        # Aplicar clausura épsilon a los nuevos estados alcanzados
         estados_actuales = obtener_clausura_epsilon(siguientes_estados, transiciones)
 
     # Finalmente, verificamos si alguno de los estados actuales es un estado final
